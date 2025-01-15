@@ -1,0 +1,14 @@
+/usr/bin/ld: /tmp/cc3Q0Syx.o: in function `loadBids(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+VectorSorting.cpp:(.text+0x2f3): undefined reference to `csv::Parser::Parser(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, csv::DataType const&, char)'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x30c): undefined reference to `csv::Parser::rowCount() const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x345): undefined reference to `csv::Parser::operator[](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x35f): undefined reference to `csv::Row::operator[][abi:cxx11](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x39e): undefined reference to `csv::Parser::operator[](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x3b8): undefined reference to `csv::Row::operator[][abi:cxx11](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x3fb): undefined reference to `csv::Parser::operator[](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x415): undefined reference to `csv::Row::operator[][abi:cxx11](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x458): undefined reference to `csv::Parser::operator[](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x472): undefined reference to `csv::Row::operator[][abi:cxx11](unsigned int) const'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x4e5): undefined reference to `csv::Parser::~Parser()'
+/usr/bin/ld: VectorSorting.cpp:(.text+0x618): undefined reference to `csv::Parser::~Parser()'
+collect2: error: ld returned 1 exit status

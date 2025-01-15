@@ -2,12 +2,14 @@
 // Name        : VectorSorting.cpp
 // Author      : Your name
 // Version     : 1.0
-// Copyright   : Copyright © 2023 SNHU COCE
+// Copyright   : Copyright ï¿½ 2023 SNHU COCE
 // Description : Vector Sorting Algorithms
 //============================================================================
 
 #include <algorithm>
 #include <iostream>
+#include <vector>
+#include <string>
 #include <time.h>
 
 #include "CSVparser.hpp"
@@ -120,7 +122,7 @@ vector<Bid> loadBids(string csvPath) {
  * @param begin Beginning index to partition
  * @param end Ending index to partition
  */
-int partition(vector<Bid>& bids, int begin, int end) {
+//int partition(vector<Bid>& bids, int begin, int end) {
     //set low and high equal to begin and end
 
     // Calculate the middle element as middlePoint (int)
@@ -137,7 +139,7 @@ int partition(vector<Bid>& bids, int begin, int end) {
        // else swap the low and high bids (built in vector method)
             // move low and high closer ++low, --high
     //return high;
-}
+
 
 /**
  * Perform a quick sort on bid title
@@ -176,18 +178,34 @@ void quickSort(vector<Bid>& bids, int begin, int end) {
  */
 void selectionSort(vector<Bid>& bids) {
     //define min as int (index of the current minimum bid)
-
+    int min;
     // check size of bids vector
     // set size_t platform-neutral result equal to bid.size()
+    size_t size = bids.size();
 
     // pos is the position within bids that divides sorted/unsorted
-    // for size_t pos = 0 and less than size -1 
+    for (size_t pos = 0; pos < size -1; ++pos)
+    { 
         // set min = pos
+        min = pos;
         // loop over remaining elements to the right of position
+        for (size_t j = pos+1; j<size; j++)
+        {
             // if this element's title is less than minimum title
+            if (bids[j].title < bids[min].title)
+            {
                 // this element becomes the minimum
+                min = j;
+            }
+        }
         // swap the current minimum with smaller one found
+        if (min != pos)
+        {
             // swap is a built in vector method
+            std::swap(bids[pos], bids[min]);
+        }
+    }
+    cout << bids.size() << " bids sorted" << endl;
 }
 
 /**
@@ -261,9 +279,21 @@ int main(int argc, char* argv[]) {
             cout << endl;
 
             break;
+        
+        case 3:
+            // initialize timer before sorting starts
+            ticks = clock();
 
-        // FIXME (1b): Invoke the selection sort and report timing results
+            // selection sort bids
+            selectionSort(bids);
 
+            // calculated elapsed time and display results
+            ticks = clock() - ticks; // current clock ticks minus starting clock ticks
+            cout << "time: " << ticks << " clock ticks" << endl;
+            cout << "time: " << ticks * 1.0 / CLOCKS_PER_SEC << " seconds" << endl;
+            break;
+
+        
         // FIXME (2b): Invoke the quick sort and report timing results
 
         }
