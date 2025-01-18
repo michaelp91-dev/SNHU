@@ -1,0 +1,118 @@
+// Global Structure Definition
+structure Bid {
+  string bidId
+  string title
+  string fund
+  double amount
+}
+
+// Function to convert a string to a double, removing a given character
+function strToDouble(string str, char ch):
+    remove all occurrences of 'ch' from 'str'
+    return the converted double value of 'str'
+
+// Function to display a Bid's information
+function displayBid(Bid bid):
+    output bid.bidId, ": ", bid.title, " | ", bid.amount, " | ", bid.fund
+
+// Function to get Bid information from user input
+function getBid():
+    Bid bid
+    prompt user for bidId and store into bid.bidId
+    prompt user for title and store into bid.title
+    prompt user for fund and store into bid.fund
+    prompt user for amount, convert it to double (using strToDouble), store in bid.amount
+    return bid
+
+// Function to load Bids from a CSV file
+function loadBids(string csvPath):
+    output "Loading CSV file ", csvPath
+    create an empty list called bids
+    initialize CSV Parser with csvPath
+    loop through each row of the CSV file:
+      create a Bid object called bid
+      set bid.bidId to the 2nd column of the current row
+      set bid.title to the 1st column of the current row
+      set bid.fund to the 9th column of the current row
+      set bid.amount to the converted double value (using strToDouble) of the 5th column in the current row
+      add bid to bids
+    return bids
+
+// Function to partition a vector of Bids for quicksort
+function partition(list of Bids bids, int begin, int end):
+    low = begin
+    high = end
+
+    if begin is greater than or equal to end:
+       return end
+    middlePoint = begin + (end - begin) / 2
+    pivot = bids[middlePoint].title
+    
+    while low is less than or equal to high:
+        while low is less than or equal to end and bids[low].title is less than pivot:
+            increment low
+        while high is greater than or equal to begin and pivot is less than bids[high].title:
+           decrement high
+        if (end - begin) is less than or equal to 1:
+           return high
+        else:
+           swap bids[low] and bids[high]
+           increment low
+           decrement high
+    return high
+
+// Function to perform quicksort on a vector of Bids, using bid.title as key
+function quickSort(list of Bids bids, int begin, int end):
+    mid = 0
+    if begin is greater than or equal to end or (end - begin) is less than or equal to 1:
+      return
+    mid = partition(bids, begin, end)
+    recursively call quickSort(bids, begin, mid)
+    recursively call quickSort(bids, mid+1, end)
+    
+// Function to perform selection sort on a vector of Bids, using bid.title as key
+function selectionSort(list of Bids bids):
+    min = integer
+    size = length of bids
+    for pos from 0 to size - 2:
+        min = pos
+        for j from pos + 1 to size - 1:
+            if bids[j].title is less than bids[min].title:
+                min = j
+        if min is not equal to pos:
+           swap bids[pos] and bids[min]
+    output length of bids, " bids sorted"
+     
+// Main function
+function main(arguments):
+  if there is a command line argument:
+        csvPath = argument
+  else:
+        csvPath = "eBid_Monthly_Sales.csv"
+  create an empty list of Bids called bids
+  create timer variable ticks
+  choice = 0
+  while choice is not equal to 9:
+    display menu options: Load Bids, Display All Bids, Selection Sort Bids, Quick Sort Bids, Exit
+    prompt user to enter choice
+    switch on choice:
+        case 1: // Load Bids
+          initialize timer
+          bids = loadBids(csvPath)
+          output number of bids read
+          calculate and display elapsed time
+        case 2: // Display All Bids
+          for each bid in bids:
+              displayBid(bid)
+        case 3: // Selection Sort All Bids
+            initialize timer
+            selectionSort(bids)
+            calculate and display elapsed time
+        case 4: // Quick Sort All Bids
+            initialize timer
+            n = length of bids - 1
+            quickSort(bids, 0, n)
+            calculate and display elapsed time
+        case 9: //Exit
+           //do nothing loop will end
+  output "Good bye."
