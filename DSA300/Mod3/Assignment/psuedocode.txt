@@ -1,0 +1,178 @@
+Class LinkedList
+
+  Private:
+    Structure Node
+        Bid bid
+        Node* next
+    End Structure
+
+    Node* head  // Pointer to the first node
+    Node* tail  // Pointer to the last node
+    Integer size // Count of nodes in the list
+
+  Public:
+    Constructor LinkedList()
+    Destructor ~LinkedList()
+    Function Append(Bid bid)
+    Function Prepend(Bid bid)
+    Function PrintList()
+    Function Remove(String bidId)
+    Function Search(String bidId)
+    Function Size() : Integer
+End Class
+
+
+//------------------------------------
+// Constructor
+//------------------------------------
+
+Function LinkedList::LinkedList()
+    head = nullptr
+    tail = nullptr
+End Function
+
+
+//------------------------------------
+// Destructor
+//------------------------------------
+
+Function LinkedList::~LinkedList()
+    Node* current = head
+    Node* temp
+
+    While current is not null
+        temp = current
+        current = current->next
+        delete temp
+    End While
+End Function
+
+//------------------------------------
+// Append Function
+//------------------------------------
+Function LinkedList::Append(Bid bid)
+    // Create new node with given bid
+    Node* newNode = new Node(bid)
+
+    // If the list is empty
+    If head is null
+      // New node is both head and tail
+      head = newNode
+      tail = newNode
+    Else
+      // Append new node to the end
+      tail->next = newNode
+      tail = newNode
+    End If
+    size = size + 1
+End Function
+
+
+//------------------------------------
+// Prepend Function
+//------------------------------------
+Function LinkedList::Prepend(Bid bid)
+  // Create new node with given bid
+    Node* newNode = new Node(bid)
+
+    // If the list is not empty
+    If head is not null
+      // New node points to the current head
+      newNode->next = head
+    End If
+
+    // New node becomes the head
+    head = newNode
+
+    // If list was empty, make the new node the tail
+    If tail is null
+        tail = newNode
+    End If
+    size = size + 1
+End Function
+
+
+//------------------------------------
+// PrintList Function
+//------------------------------------
+Function LinkedList::PrintList()
+    Node* current = head
+    While current is not null
+        Print current->bid.bidId, current->bid.title, current->bid.amount, current->bid.fund
+        current = current->next
+    End While
+End Function
+
+//------------------------------------
+// Remove Function
+//------------------------------------
+Function LinkedList::Remove(String bidId)
+   // If the list is empty, nothing to remove
+    If head is null
+        Return
+
+    // Special case if head needs to be removed
+    If head->bid.bidId equals bidId
+        Node* temp = head
+        head = head->next
+        delete temp
+
+        //if the head was the only node, set tail to null
+        If head is null
+            tail = null
+        End If
+        size = size -1
+        Return
+    End If
+
+    Node* current = head
+    While current is not null AND current->next is not null
+      //If next node bidID matches given bidID
+       If current->next->bid.bidId equals bidId
+        Node* temp = current->next
+        current->next = current->next->next
+
+        //if node removed was the tail, update tail pointer
+        If current->next is null
+            tail = current
+        End If
+        delete temp
+        size = size - 1
+        Return //Exit loop once the node is deleted
+       End If
+      current = current->next
+    End While
+End Function
+
+//------------------------------------
+// Search Function
+//------------------------------------
+Function LinkedList::Search(String bidId) : Bid
+    // Special case: check if head matches first
+    If head is not null AND head->bid.bidId equals bidId
+      Return head->bid
+    End If
+
+    Node* current = head
+
+    While current is not null
+      // If current node matches
+        If current->bid.bidId equals bidId
+            Return current->bid
+        End If
+        current = current->next
+    End While
+
+    // If nothing is found, return empty Bid object
+    Bid emptyBid
+    Return emptyBid
+End Function
+
+
+//------------------------------------
+// Size Function
+//------------------------------------
+
+Function LinkedList::Size() : Integer
+    Return size
+End Function
