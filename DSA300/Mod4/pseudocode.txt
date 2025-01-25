@@ -1,0 +1,144 @@
+// ======================== HashTable Class =========================
+
+// Data Members:
+//   nodes: Vector of Node structures
+//   tableSize: Unsigned integer (default 179)
+
+// Node Structure:
+//   bid: Bid structure
+//   key: Unsigned integer (hash key)
+//   next: Pointer to next Node (for chaining)
+
+// Method Implementations:
+
+// 1. HashTable() (Default Constructor):
+HashTable()
+    nodes.resize(DEFAULT_SIZE)
+
+// 2. HashTable(unsigned int size) (Parameterized Constructor):
+HashTable(size)
+    tableSize = size
+    nodes.resize(tableSize)
+
+// 3. ~HashTable() (Destructor):
+~HashTable()
+    nodes.clear()
+
+// 4. hash(int key) (Hash Function):
+hash(key)
+    return key % tableSize
+
+// 5. Insert(Bid bid):
+Insert(bid)
+    key = hash(bid.bidId converted to integer)
+    node = nodes[key]
+
+    if node.key is equal to UINT_MAX
+        node.bid = bid
+        node.key = key
+        node.next = null
+    else
+        newNode = new Node(bid, key)
+        curr = node
+        while curr.next is not null
+            curr = curr.next
+        curr.next = newNode
+
+// 6. PrintAll():
+PrintAll()
+    for each node in nodes
+        if node.key is not equal to UINT_MAX
+            print "Key:", node.key, " BidID: ", node.bid.bidId, ...
+            curr = node.next
+            while curr is not null
+                print "Key:", curr.key, " BidID: ", curr.bid.bidId, ...
+                curr = curr.next
+
+// 7. Remove(string bidId):
+Remove(bidId)
+    key = hash(bidId converted to integer)
+    curr = nodes[key]
+    prev = null
+    while curr is not null
+        if curr.key is not equal to UINT_MAX and curr.bid.bidId is equal to bidId
+            if prev is null
+                if curr.next is null
+                    curr.key = UINT_MAX
+                    curr.bid = default Bid
+                    curr.next = null
+                else
+                    temp = curr.next
+                    curr.bid = temp.bid
+                    curr.key = temp.key
+                    curr.next = temp.next
+                    delete temp
+                return
+            else
+                prev.next = curr.next
+                delete curr
+                return
+        prev = curr
+        curr = curr.next
+
+// 8. Search(string bidId):
+Search(bidId)
+    bid = default Bid object
+    key = hash(bidId converted to integer)
+    curr = nodes[key]
+    while curr is not null
+        if curr.key is not equal to UINT_MAX and curr.bid.bidId is equal to bidId
+            return curr.bid
+        curr = curr.next
+    return bid
+
+// 9. Size():
+Size()
+    return tableSize
+
+// ======================== Main Function =========================
+
+Main()
+    // Parse command line arguments or use defaults
+    if number of command line arguments is 2
+        csvPath = argument 1
+        bidKey = "98223"
+    else if number of command line arguments is 3
+        csvPath = argument 1
+        bidKey = argument 2
+    else
+        csvPath = "eBid_Monthly_Sales.csv"
+        bidKey = "98223"
+
+    ticks = clock()
+    bidTable = new HashTable()
+
+    choice = 0
+    while choice is not 9
+        display menu options
+        get user choice
+        switch on choice
+            case 1: // Load Bids
+                ticks = clock()
+                loadBids(csvPath, bidTable)
+                ticks = clock() - ticks
+                print time in clock ticks
+                print time in seconds
+                break
+            case 2: // Display All Bids
+                bidTable.PrintAll()
+                break
+            case 3: // Find Bid
+                ticks = clock()
+                bid = bidTable.Search(bidKey)
+                ticks = clock() - ticks
+                if bid.bidId is not empty
+                    displayBid(bid)
+                else
+                    print "Bid Id " bidKey " not found."
+                print time in clock ticks
+                print time in seconds
+                break
+            case 4: // Remove Bid
+                bidTable.Remove(bidKey)
+                break
+    print "Good bye."
