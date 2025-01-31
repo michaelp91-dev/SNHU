@@ -1,0 +1,111 @@
+
+// Course Struct:
+//    String courseNumber
+//    String courseName
+//    Vector<String> prerequisites
+
+// Global Variable:
+// HashTable<String, Course> allCourses // Changed to Hash Table (Key: Course Number, Value: Course)
+
+
+Function loadCourseData(String filePath) -> HashTable<String, Course>
+  // 1. Initialize Variables
+  HashTable<String, Course> courses; // Changed to Hash Table
+
+  // 2. Open File
+  File file = openFile(filePath)
+
+  if file == null:
+      print "Error: Unable to open file."
+      return empty HashTable<String, Course>
+
+   // 3. Read and Parse Lines
+   while file has next line:
+        String line = file.readLine()
+        Vector<String> lineValues = split(line, ",")  // Split by commas
+
+        // 3.1. Validate Line Values
+        if lineValues.size() < 2:
+           print "Error: Invalid line format in file."
+           file.close()
+           return empty HashTable<String, Course> // Exit if format is bad
+
+        // 3.2 Create and Populate the Course Object
+        Course currentCourse
+        currentCourse.courseNumber = lineValues[0]
+        currentCourse.courseName = lineValues[1]
+
+       // 3.3 Load Prerequisites
+       for i = 2 to lineValues.size() - 1
+          currentCourse.prerequisites.push_back(lineValues[i])
+       end for
+
+       //3.4 Store in Hash Table
+       courses.insert(currentCourse.courseNumber, currentCourse) // Use Course number as key
+  end while
+
+  file.close()
+
+  // 4. Validate Data
+  if validateData(courses) == false:
+        return empty HashTable<String, Course> // Exit the function
+
+  return courses
+end function
+
+
+Function validateData(HashTable<String, Course> courses) -> Boolean
+  // 1. Iterate Through Courses
+  for each courseEntry in courses: // Iterate through hash table entries
+    Course course = courseEntry.value; // Get the course object
+    // 2. Iterate Through Prerequisites
+    for each prerequisite in course.prerequisites:
+       // 3. Check for Prerequisites in Hash Table
+        if courses.containsKey(prerequisite) == false:
+           print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
+           return false;
+       end if
+    end for
+  end for
+  
+  return true // All validation passed
+end function
+
+Function searchCourse(HashTable<String, Course> courses, String courseNumber) -> void
+    // 1. Check for the course
+    if courses.containsKey(courseNumber) == true:
+       Course foundCourse = courses.get(courseNumber); // Get the course
+
+       print "Course Number: " + foundCourse.courseNumber
+       print "Course Name: " + foundCourse.courseName
+       print "Prerequisites:"
+
+        if foundCourse.prerequisites.size() > 0:
+          for each prereq in foundCourse.prerequisites:
+               print "   " + prereq
+          end for
+        else:
+            print "    None"
+        end if
+        return  // Found, exit function
+    end if
+
+  print "Error: Course with number " + courseNumber + " not found."
+end function
+
+
+// Main Program Logic (No Changes Needed - data structure change is in globals.)
+// 1. Get File Path
+String filePath = "courses.txt" // (Or get from user input)
+
+// 2. Load Data
+allCourses = loadCourseData(filePath)
+
+// 3. Check if Loaded
+if allCourses is not empty:
+   //4. Get user Input
+   String userInputCourse = getUserInput("Enter the course number: ")
+
+   //5. Search and Print
+   searchCourse(allCourses, userInputCourse)
+end if
