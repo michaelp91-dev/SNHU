@@ -1,0 +1,117 @@
+// Course Struct:
+//    String courseNumber
+//    String courseName
+//    Vector<String> prerequisites
+
+// Global Variable:
+// Tree<Course> allCourses
+
+Function loadCourseData(String filePath) -> Tree<Course>
+  // 1. Initialize Variables
+  Tree<Course> courses;
+
+  // 2. Open File
+  File file = openFile(filePath)
+
+  if file == null:
+      print "Error: Unable to open file."
+      return empty Tree<Course>
+
+   // 3. Read and Parse Lines
+   while file has next line:
+        String line = file.readLine()
+        Vector<String> lineValues = split(line, ",")
+
+        // 3.1. Validate Line Values
+        if lineValues.size() < 2:
+           print "Error: Invalid line format in file."
+           file.close()
+           return empty Tree<Course>
+
+        // 3.2 Create and Populate the Course Object
+        Course currentCourse
+        currentCourse.courseNumber = lineValues[0]
+        currentCourse.courseName = lineValues[1]
+
+       // 3.3 Load Prerequisites
+       for i = 2 to lineValues.size() - 1
+          currentCourse.prerequisites.push_back(lineValues[i])
+       end for
+
+       // 3.4 Insert into BST
+       courses.insert(currentCourse)
+  end while
+
+  file.close()
+
+  // 4. Validate Data
+  if validateData(courses) == false:
+        return empty Tree<Course>
+
+  return courses
+end function
+
+Function validateData(Tree<Course> courses) -> Boolean
+    // 1. Get All Courses for Validation
+   Vector<Course> courseList = courses.inorderTraversal()
+
+  // 2. Iterate Through Courses
+  for each course in courseList:
+    // 3. Iterate Through Prerequisites
+    for each prerequisite in course.prerequisites:
+       // 4. Check for Prerequisites in Course List
+       Boolean prerequisiteFound = false;
+       for each otherCourse in courseList:
+           if prerequisite == otherCourse.courseNumber:
+              prerequisiteFound = true
+              break;
+       end for
+          // 5. If prereq not found, error
+        if prerequisiteFound == false:
+           print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
+           return false;
+    end for
+  end for
+  
+  return true
+end function
+
+Function searchCourse(Tree<Course> courses, String courseNumber) -> void
+    // 1. Search for the Course
+   Course foundCourse = courses.search(courseNumber)
+
+    // 2. Check if found
+    if foundCourse != null:
+        print "Course Number: " + foundCourse.courseNumber
+        print "Course Name: " + foundCourse.courseName
+        print "Prerequisites:"
+
+        if foundCourse.prerequisites.size() > 0:
+          for each prereq in foundCourse.prerequisites:
+               print "   " + prereq
+          end for
+        else:
+           print "    None"
+        end if
+        return
+
+    end if
+
+  print "Error: Course with number " + courseNumber + " not found."
+end function
+
+// Main Program Logic
+// 1. Get File Path
+String filePath = "courses.txt" // (Or get from user input)
+
+// 2. Load Data
+allCourses = loadCourseData(filePath)
+
+// 3. Check if Loaded
+if allCourses is not empty:
+   //4. Get user Input
+   String userInputCourse = getUserInput("Enter the course number: ")
+
+   //5. Search and Print
+   searchCourse(allCourses, userInputCourse)
+end if
