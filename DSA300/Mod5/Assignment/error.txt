@@ -1,0 +1,19 @@
+BinarySearchTree.cpp: In function ‘double strToDouble(std::string, char)’:
+BinarySearchTree.cpp:292:31: error: cannot convert ‘std::__cxx11::basic_string<char>::iterator’ {aka ‘__gnu_cxx::__normal_iterator<char*, std::__cxx11::basic_string<char> >’} to ‘const char*’
+  292 |     str.erase(remove(str.begin(), str.end(), ch), str.end());
+      |                      ~~~~~~~~~^~
+      |                               |
+      |                               std::__cxx11::basic_string<char>::iterator {aka __gnu_cxx::__normal_iterator<char*, std::__cxx11::basic_string<char> >}
+In file included from /usr/include/c++/9/cstdio:42,
+                 from /usr/include/c++/9/ext/string_conversions.h:43,
+                 from /usr/include/c++/9/bits/basic_string.h:6496,
+                 from /usr/include/c++/9/string:55,
+                 from /usr/include/c++/9/bits/locale_classes.h:40,
+                 from /usr/include/c++/9/bits/ios_base.h:41,
+                 from /usr/include/c++/9/ios:42,
+                 from /usr/include/c++/9/ostream:38,
+                 from /usr/include/c++/9/iostream:39,
+                 from BinarySearchTree.cpp:9:
+/usr/include/stdio.h:146:32: note:   initializing argument 1 of ‘int remove(const char*)’
+  146 | extern int remove (const char *__filename) __THROW;
+      |                    ~~~~~~~~~~~~^~~~~~~~~~

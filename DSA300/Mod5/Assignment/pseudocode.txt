@@ -1,0 +1,137 @@
+Class BinarySearchTree
+  Private:
+    Node* root
+    static function deletePostOrder(Node*)
+
+    function addNode(Node* node, Bid bid)
+    function inOrder(Node* node)
+    function postOrder(Node* node)
+    function preOrder(Node* node)
+    function removeNode(Node* node, string bidId)
+
+  Public:
+    Constructor BinarySearchTree()
+    Destructor ~BinarySearchTree()
+    function InOrder()
+    function PostOrder()
+    function PreOrder()
+    function Insert(Bid bid)
+    function Remove(string bidId)
+    function Search(string bidId)
+End Class
+
+Constructor BinarySearchTree()
+    root = NULL
+End Constructor
+
+Destructor ~BinarySearchTree()
+    Call deletePostOrder with root node
+End Destructor
+
+Function InOrder()
+    Call inOrder with root node
+End Function
+
+Function PostOrder()
+    Call postOrder with root node
+End Function
+
+Function PreOrder()
+    Call preOrder with root node
+End Function
+
+Function Insert(Bid bid)
+    IF root is NULL
+        root = create a new Node with the provided bid
+    ELSE
+        Call addNode with root node and bid
+    END IF
+End Function
+
+Function Remove(string bidId)
+    root = Call removeNode with root node and bidId
+End Function
+
+Function Search(string bidId)
+    currentNode = root
+    WHILE currentNode is not NULL
+        IF currentNode's bidId is equal to bidId
+            RETURN currentNode's bid
+        ELSE IF bidId is less than currentNode's bidId
+            currentNode = currentNode's left child
+        ELSE
+            currentNode = currentNode's right child
+        END IF
+    END WHILE
+    RETURN empty bid object
+End Function
+
+Function addNode(node, bid)
+    IF bid's bidId is less than node's bid's bidId
+        IF node's left child is NULL
+            Create a new Node with the provided bid
+            Set node's left child to the new node
+        ELSE
+            Call addNode with node's left child and bid
+        END IF
+    ELSE
+        IF node's right child is NULL
+            Create a new Node with the provided bid
+            Set node's right child to the new node
+        ELSE
+            Call addNode with node's right child and bid
+        END IF
+    END IF
+End Function
+
+Function inOrder(node)
+    IF node is not NULL
+      Call inOrder with node's left child
+      Display node's bid
+      Call inOrder with node's right child
+    END IF
+End Function
+
+Function postOrder(node)
+  IF node is not NULL
+    Call postOrder with node's left child
+    Call postOrder with node's right child
+    Display node's bid
+  END IF
+End Function
+
+Function preOrder(node)
+  IF node is not NULL
+    Display node's bid
+    Call preOrder with node's left child
+    Call preOrder with node's right child
+  END IF
+End Function
+
+Function removeNode(node, bidId)
+    IF node is NULL
+        RETURN node
+    END IF
+    IF bidId is less than node's bidId
+        node's left child = Call removeNode with node's left child and bidId
+    ELSE IF bidId is greater than node's bidId
+        node's right child = Call removeNode with node's right child and bidId
+    ELSE
+        IF node has no children
+           Delete node
+           RETURN NULL
+       ELSE IF node only has a left child
+           temp = node's left child
+           Delete node
+           RETURN temp
+        ELSE IF node only has a right child
+           temp = node's right child
+           Delete node
+           RETURN temp
+        ELSE
+           temp = minimum node from node's right subtree
+           copy temp's bid to node's bid
+           remove temp from node's right subtree using recursive remove call
+    END IF
+    RETURN node
+End Function
