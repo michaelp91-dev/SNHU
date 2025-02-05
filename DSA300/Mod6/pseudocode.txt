@@ -1,0 +1,432 @@
+// Course Struct:
+//    String courseNumber
+//    String courseName
+//    Vector<String> prerequisites
+
+// Global Variables:
+// Vector<Course> allCoursesVector
+// HashTable<String, Course> allCoursesHash
+// Tree<Course> allCoursesTree
+
+// Function Declarations
+Function loadCourseDataVector(String filePath) -> Vector<Course>
+Function validateDataVector(Vector<Course> courses) -> Boolean
+Function searchCourseVector(Vector<Course> courses, String courseNumber) -> void
+Function printAllCoursesVector(Vector<Course> courses) -> void
+
+Function loadCourseDataHash(String filePath) -> HashTable<String, Course>
+Function validateDataHash(HashTable<String, Course> courses) -> Boolean
+Function searchCourseHash(HashTable<String, Course> courses, String courseNumber) -> void
+Function printAllCoursesHash(HashTable<String, Course> courses) -> void
+
+Function loadCourseDataTree(String filePath) -> Tree<Course>
+Function validateDataTree(Tree<Course> courses) -> Boolean
+Function searchCourseTree(Tree<Course> courses, String courseNumber) -> void
+Function printAllCoursesTree(Tree<Course> courses) -> void
+
+Function displayMenu() -> Integer
+Function processMenuChoice(Integer choice) -> void
+
+Function compareCourses(Course course1, Course course2) -> Boolean
+
+
+// --- Vector Implementation ---
+
+Function loadCourseDataVector(String filePath) -> Vector<Course>
+  // 1. Initialize Variables
+  Vector<Course> courses;
+
+  // 2. Open File
+  File file = openFile(filePath)
+
+  if file == null:
+      print "Error: Unable to open file."
+      return empty Vector<Course>
+
+   // 3. Read and Parse Lines
+   while file has next line:
+        String line = file.readLine()
+        Vector<String> lineValues = split(line, ",")
+
+        // 3.1. Validate Line Values
+        if lineValues.size() < 2:
+           print "Error: Invalid line format in file."
+           file.close()
+           return empty Vector<Course>
+
+        // 3.2 Create and Populate the Course Object
+        Course currentCourse
+        currentCourse.courseNumber = lineValues[0]
+        currentCourse.courseName = lineValues[1]
+
+       // 3.3 Load Prerequisites
+       for i = 2 to lineValues.size() - 1
+          currentCourse.prerequisites.push_back(lineValues[i])
+       end for
+        // 3.4 Check for duplicates
+        Boolean duplicateFound = false;
+         for each course in courses:
+           if course.courseNumber == currentCourse.courseNumber:
+            duplicateFound = true;
+            print "Duplicate course number found: "+ currentCourse.courseNumber
+             break
+          end for
+        if duplicateFound == false:
+            courses.push_back(currentCourse)
+        end if
+  end while
+
+  file.close()
+  
+  if validateDataVector(courses) == false:
+        return empty Vector<Course>
+
+  return courses
+end function
+
+Function validateDataVector(Vector<Course> courses) -> Boolean
+  // 1. Iterate Through Courses
+  for each course in courses:
+    // 2. Iterate Through Prerequisites
+    for each prerequisite in course.prerequisites:
+       Boolean prerequisiteFound = false;
+          // 3. Check for Prerequisites in Course List
+         for each otherCourse in courses:
+              if prerequisite == otherCourse.courseNumber:
+                 prerequisiteFound = true
+                 break
+         end for
+
+          // 4. If prereq not found, error
+        if prerequisiteFound == false:
+           print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
+           return false;
+
+    end for
+  end for
+  
+  return true
+end function
+
+
+Function searchCourseVector(Vector<Course> courses, String courseNumber) -> void
+    // 1. Search for matching course
+    for each course in courses:
+       if course.courseNumber == courseNumber:
+            print "Course Number: " + course.courseNumber
+            print "Course Name: " + course.courseName
+            print "Prerequisites:"
+
+            if course.prerequisites.size() > 0:
+               for each prereq in course.prerequisites:
+                   print "   " + prereq
+               end for
+            else:
+               print "    None"
+            end if
+            return  // Found, exit function
+
+       end if
+    end for
+
+  print "Error: Course with number " + courseNumber + " not found."
+end function
+
+Function printAllCoursesVector(Vector<Course> courses) -> void
+  // 1. Create a Copy of Courses for Sorting
+  Vector<Course> sortedCourses = courses;
+  
+  // 2. Sort by course number
+    sort(sortedCourses, compareCourses); // Uses a custom compare function
+
+    // 3. Print each course in sorted order
+  for each course in sortedCourses:
+      print course.courseNumber + " " + course.courseName;
+  end for
+end function
+    
+Function compareCourses(Course course1, Course course2) -> Boolean
+    if course1.courseNumber < course2.courseNumber:
+        return true
+    else:
+      return false;
+    end if
+end function
+// --- Hash Table Implementation ---
+
+Function loadCourseDataHash(String filePath) -> HashTable<String, Course>
+  // 1. Initialize Variables
+  HashTable<String, Course> courses;
+
+  // 2. Open File
+  File file = openFile(filePath)
+
+  if file == null:
+      print "Error: Unable to open file."
+      return empty HashTable<String, Course>
+
+   // 3. Read and Parse Lines
+   while file has next line:
+        String line = file.readLine()
+        Vector<String> lineValues = split(line, ",")
+
+        // 3.1. Validate Line Values
+        if lineValues.size() < 2:
+           print "Error: Invalid line format in file."
+           file.close()
+           return empty HashTable<String, Course>
+
+        // 3.2 Create and Populate the Course Object
+        Course currentCourse
+        currentCourse.courseNumber = lineValues[0]
+        currentCourse.courseName = lineValues[1]
+
+       // 3.3 Load Prerequisites
+       for i = 2 to lineValues.size() - 1
+          currentCourse.prerequisites.push_back(lineValues[i])
+       end for
+
+        // 3.4 Check for duplicates
+      if courses.containsKey(currentCourse.courseNumber) == true:
+        print "Duplicate course number found: "+ currentCourse.courseNumber
+      else:
+         courses.insert(currentCourse.courseNumber, currentCourse)
+      end if
+  end while
+
+  file.close()
+
+  if validateDataHash(courses) == false:
+        return empty HashTable<String, Course>
+
+  return courses
+end function
+
+
+Function validateDataHash(HashTable<String, Course> courses) -> Boolean
+  // 1. Iterate Through Courses
+  for each courseEntry in courses:
+    Course course = courseEntry.value;
+    // 2. Iterate Through Prerequisites
+    for each prerequisite in course.prerequisites:
+       // 3. Check for Prerequisites in Hash Table
+        if courses.containsKey(prerequisite) == false:
+           print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
+           return false;
+       end if
+    end for
+  end for
+  
+  return true
+end function
+
+Function searchCourseHash(HashTable<String, Course> courses, String courseNumber) -> void
+    // 1. Check for the course
+    if courses.containsKey(courseNumber) == true:
+       Course foundCourse = courses.get(courseNumber);
+
+       print "Course Number: " + foundCourse.courseNumber
+       print "Course Name: " + foundCourse.courseName
+       print "Prerequisites:"
+
+        if foundCourse.prerequisites.size() > 0:
+          for each prereq in foundCourse.prerequisites:
+               print "   " + prereq
+          end for
+        else:
+            print "    None"
+        end if
+        return  // Found, exit function
+    end if
+
+  print "Error: Course with number " + courseNumber + " not found."
+end function
+
+Function printAllCoursesHash(HashTable<String, Course> courses) -> void
+   // 1. Get a vector of courses for sorting
+   Vector<Course> courseList = courses.getValues();
+
+   // 2. Sort by course number
+  sort(courseList, compareCourses)
+
+    // 3. Print each course in sorted order
+  for each course in courseList:
+      print course.courseNumber + " " + course.courseName;
+  end for
+end function
+
+
+// --- Tree Implementation ---
+Function loadCourseDataTree(String filePath) -> Tree<Course>
+  // 1. Initialize Variables
+  Tree<Course> courses;
+
+  // 2. Open File
+  File file = openFile(filePath)
+
+  if file == null:
+      print "Error: Unable to open file."
+      return empty Tree<Course>
+
+   // 3. Read and Parse Lines
+   while file has next line:
+        String line = file.readLine()
+        Vector<String> lineValues = split(line, ",")
+
+        // 3.1. Validate Line Values
+        if lineValues.size() < 2:
+           print "Error: Invalid line format in file."
+           file.close()
+           return empty Tree<Course>
+
+        // 3.2 Create and Populate the Course Object
+        Course currentCourse
+        currentCourse.courseNumber = lineValues[0]
+        currentCourse.courseName = lineValues[1]
+
+       // 3.3 Load Prerequisites
+       for i = 2 to lineValues.size() - 1
+          currentCourse.prerequisites.push_back(lineValues[i])
+       end for
+
+      // 3.4 Check for duplicates
+     Course foundCourse = courses.search(currentCourse.courseNumber);
+      if foundCourse != null:
+         print "Duplicate course number found: "+ currentCourse.courseNumber
+      else:
+        courses.insert(currentCourse)
+      end if
+  end while
+
+  file.close()
+
+  if validateDataTree(courses) == false:
+        return empty Tree<Course>
+
+  return courses
+end function
+
+Function validateDataTree(Tree<Course> courses) -> Boolean
+   // 1. Get All Courses for Validation
+   Vector<Course> courseList = courses.inorderTraversal()
+
+  // 2. Iterate Through Courses
+  for each course in courseList:
+    // 3. Iterate Through Prerequisites
+    for each prerequisite in course.prerequisites:
+       // 4. Check for Prerequisites in Course List
+       Boolean prerequisiteFound = false;
+       for each otherCourse in courseList:
+           if prerequisite == otherCourse.courseNumber:
+              prerequisiteFound = true
+              break;
+       end for
+          // 5. If prereq not found, error
+        if prerequisiteFound == false:
+           print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
+           return false;
+    end for
+  end for
+  
+  return true
+end function
+
+Function searchCourseTree(Tree<Course> courses, String courseNumber) -> void
+    // 1. Search for the Course
+   Course foundCourse = courses.search(courseNumber)
+
+    // 2. Check if found
+    if foundCourse != null:
+        print "Course Number: " + foundCourse.courseNumber
+        print "Course Name: " + foundCourse.courseName
+        print "Prerequisites:"
+
+        if foundCourse.prerequisites.size() > 0:
+          for each prereq in foundCourse.prerequisites:
+               print "   " + prereq
+          end for
+        else:
+           print "    None"
+        end if
+        return
+
+    end if
+
+  print "Error: Course with number " + courseNumber + " not found."
+end function
+
+Function printAllCoursesTree(Tree<Course> courses) -> void
+  // 1. Get All Courses with Inorder Traversal
+    Vector<Course> courseList = courses.inorderTraversal();
+    
+  // 2. Print each course
+  for each course in courseList:
+      print course.courseNumber + " " + course.courseName;
+  end for
+end function
+
+
+
+// --- Menu and Main Logic ---
+Function displayMenu() -> Integer
+  print "--- Menu ---"
+  print "1. Load Course Data"
+  print "2. Print All Courses"
+  print "3. Print Course Information"
+  print "9. Exit"
+  Integer choice = getUserInput("Enter your choice: ")
+  return choice
+end function
+
+Function processMenuChoice(Integer choice) -> void
+    String filePath
+  if choice == 1:
+    filePath = getUserInput("Enter the course file path: ")
+      allCoursesVector = loadCourseDataVector(filePath);
+      allCoursesHash = loadCourseDataHash(filePath);
+      allCoursesTree = loadCourseDataTree(filePath)
+      print "Course data loaded."
+  else if choice == 2:
+     Integer structChoice = getUserInput("Select Data Structure (1: Vector, 2: Hash, 3: Tree): ");
+       if structChoice == 1:
+           printAllCoursesVector(allCoursesVector);
+       else if structChoice == 2:
+           printAllCoursesHash(allCoursesHash);
+       else if structChoice == 3:
+           printAllCoursesTree(allCoursesTree);
+       else:
+          print "Invalid Data Structure Choice";
+       end if;
+
+  else if choice == 3:
+    Integer structChoice = getUserInput("Select Data Structure (1: Vector, 2: Hash, 3: Tree): ");
+      String courseNumber;
+    do
+        courseNumber = getUserInput("Enter course number to search (or 'done' to return to menu): ")
+        if courseNumber != "done":
+           if structChoice == 1:
+            searchCourseVector(allCoursesVector, courseNumber)
+           else if structChoice == 2:
+             searchCourseHash(allCoursesHash, courseNumber)
+           else if structChoice == 3:
+             searchCourseTree(allCoursesTree, courseNumber)
+           else:
+             print "Invalid Data Structure Choice";
+            break;
+           end if;
+        end if
+    while courseNumber != "done"
+
+  else if choice == 9:
+    print "Exiting..."
+  else:
+    print "Invalid choice."
+  end if
+end function
+
+// Main Program Logic
+Integer menuChoice
+do
+  menuChoice = displayMenu()
+  processMenuChoice(menuChoice)
+while menuChoice != 9
