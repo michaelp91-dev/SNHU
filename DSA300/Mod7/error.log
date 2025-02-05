@@ -1,0 +1,31 @@
+ProjectTwo.cpp: In function ‘int main()’:
+ProjectTwo.cpp:198:41: error: too many arguments to function ‘void processMenuChoice(std::unordered_map<std::__cxx11::basic_string<char>, Course>&)’
+  198 |             processMenuChoice(courses, 1);
+      |                                         ^
+ProjectTwo.cpp:43:6: note: declared here
+   43 | void processMenuChoice(unordered_map<string, Course>& courses) {
+      |      ^~~~~~~~~~~~~~~~~
+ProjectTwo.cpp:201:41: error: too many arguments to function ‘void processMenuChoice(std::unordered_map<std::__cxx11::basic_string<char>, Course>&)’
+  201 |             processMenuChoice(courses, 2);
+      |                                         ^
+ProjectTwo.cpp:43:6: note: declared here
+   43 | void processMenuChoice(unordered_map<string, Course>& courses) {
+      |      ^~~~~~~~~~~~~~~~~
+ProjectTwo.cpp:204:41: error: too many arguments to function ‘void processMenuChoice(std::unordered_map<std::__cxx11::basic_string<char>, Course>&)’
+  204 |             processMenuChoice(courses, 3);
+      |                                         ^
+ProjectTwo.cpp:43:6: note: declared here
+   43 | void processMenuChoice(unordered_map<string, Course>& courses) {
+      |      ^~~~~~~~~~~~~~~~~
+ProjectTwo.cpp:207:43: error: too many arguments to function ‘void processMenuChoice(std::unordered_map<std::__cxx11::basic_string<char>, Course>&)’
+  207 |               processMenuChoice(courses, 9);
+      |                                           ^
+ProjectTwo.cpp:43:6: note: declared here
+   43 | void processMenuChoice(unordered_map<string, Course>& courses) {
+      |      ^~~~~~~~~~~~~~~~~
+ProjectTwo.cpp:210:41: error: too many arguments to function ‘void processMenuChoice(std::unordered_map<std::__cxx11::basic_string<char>, Course>&)’
+  210 |             processMenuChoice(courses, 0);
+      |                                         ^
+ProjectTwo.cpp:43:6: note: declared here
+   43 | void processMenuChoice(unordered_map<string, Course>& courses) {
+      |      ^~~~~~~~~~~~~~~~~
