@@ -109,19 +109,15 @@ void searchCourse(const unordered_map<string, Course>& courses, const string& co
         const Course& course = it->second;
         cout << "Course Number: " << course.courseNumber << endl;
         cout << "Course Name: " << course.courseName << endl;
-        cout << "Prerequisites:" << endl;
+        cout << "Prerequisites: ";
 
         if (course.prerequisites.empty()) {
-            cout << "   None" << endl;
+            cout << "None" << endl;
         } else {
             for (const string& prereq : course.prerequisites) {
-                auto it2 = courses.find(prereq);
-                if (it2 != courses.end()) {
-                    cout << "   " << prereq << " " << it2->second.courseName << endl;
-                } else {
-                    cout << "   " << prereq << " (Not Found)" << endl;
-                }
+                cout << prereq << " " ;
             }
+        cout << endl;
         }
     } else {
         cout << "Error: Course with number " << courseNumber << " not found." << endl;
