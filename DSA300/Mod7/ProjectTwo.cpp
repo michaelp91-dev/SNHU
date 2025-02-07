@@ -26,12 +26,79 @@ struct Course {
             int displayMenu();
             bool compareCourses(const Course& course1, const Course& course2);
 
+<<<<<<< HEAD
             // --- Helper function to convert a string to lowercase ---
             string toLowercase(const string& str) {
                 string result = str;
                     transform(result.begin(), result.end(), result.begin(), ::tolower);
                         return result;
                         }
+=======
+// --- Helper function to convert a string to lowercase ---
+string toLowercase(const string& str) {
+    string result = str;
+    transform(result.begin(), result.end(), result.begin(), ::tolower);
+    return result;
+}
+
+// --- Main Function ---
+int main() {
+    unordered_map<string, Course> courses; // Data structure to store courses
+    int menuChoice;
+    string filePath;
+    string courseNumber;
+    bool dataIsValid = false; // Flag to track data validity
+
+    do {
+        menuChoice = displayMenu();
+
+        switch (menuChoice) {
+            case 1:
+                cout << "Enter the course file path: ";
+                cin >> filePath;
+                courses = loadCourseData(filePath);
+
+                if (!courses.empty()) {
+                    cout << "Course data loaded." << endl;
+                    dataIsValid = validateData(courses); // Validate the data
+
+                    if (dataIsValid) {
+                        cout << "Data is valid." << endl;
+                    } else {
+                        cout << "Data is invalid. Please check the file." << endl;
+                        courses.clear(); // Clear the data if invalid
+                    }
+                } else {
+                    cout << "Failed to load course data." << endl;
+                }
+                break;
+            case 2:
+                if (dataIsValid) { // Only allow if data is valid
+                    printAllCourses(courses);
+                } else {
+                    cout << "Error: Load and validate course data first." << endl;
+                }
+                break;
+            case 3:
+                if (dataIsValid) { // Only allow if data is valid
+                    cout << "Enter course number to search: ";
+                    cin >> courseNumber;
+                    searchCourse(courses, courseNumber);
+                } else {
+                    cout << "Error: Load and validate course data first." << endl;
+                }
+                break;
+            case 9:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice." << endl;
+        }
+    } while (menuChoice != 9);
+
+    return 0;
+}
+>>>>>>> aa7e2efdf3c9fa32bf06b6bce9108cf0cece1709
 
                         // --- Main Function ---
                         int main() {
@@ -132,6 +199,7 @@ struct Course {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 return unordered_map<string, Course>();  // Return empty
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }
 
+<<<<<<< HEAD
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Course currentCourse;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         currentCourse.courseNumber = lineValues[0];
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 currentCourse.courseName = lineValues[1];
@@ -147,6 +215,49 @@ struct Course {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             courses[currentCourse.courseNumber] = currentCourse; // Insert into map
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         }
+=======
+// --- searchCourse ---
+void searchCourse(const unordered_map<string, Course>& courses, const string& courseNumber) {
+    string lowercaseCourseNumber = toLowercase(courseNumber);
+
+    for (const auto& pair : courses) {
+        string lowercaseStoredNumber = toLowercase(pair.first); // Convert stored course number to lowercase
+
+        if (lowercaseStoredNumber == lowercaseCourseNumber) {
+            const Course& course = pair.second;
+
+            cout << "\n--- Course Information ---" << endl;
+            cout << "Course Number: " << course.courseNumber << endl;
+            cout << "Course Name: " << course.courseName << endl;
+
+            cout << "Prerequisites: ";
+            if (course.prerequisites.empty()) {
+                cout << "None" << endl;
+            } else {
+                // Print prerequisites comma-separated on one line
+                for (size_t i = 0; i < course.prerequisites.size(); ++i) {
+                    const string& prereq = course.prerequisites[i];
+                    auto it2 = courses.find(prereq);
+                    if (it2 != courses.end()) {
+                        cout << prereq << " " << it2->second.courseName;
+                    } else {
+                        cout << prereq << " (Not Found)";
+                    }
+
+                    if (i < course.prerequisites.size() - 1) {
+                        cout << ", ";
+                    }
+                }
+                cout << endl;
+            }
+            cout << endl;
+            return;  // Course found and printed, exit function
+        }
+    }
+
+    cout << "Error: Course with number " << courseNumber << " not found." << endl;
+}
+>>>>>>> aa7e2efdf3c9fa32bf06b6bce9108cf0cece1709
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             file.close();
 
@@ -168,6 +279,7 @@ struct Course {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  return true;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  }
 
+<<<<<<< HEAD
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  // --- searchCourse ---
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  void searchCourse(const unordered_map<string, Course>& courses, const string& courseNumber) {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      string lowercaseCourseNumber = toLowercase(courseNumber);
@@ -237,3 +349,16 @@ struct Course {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              cout << endl;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ```
+=======
+    // Print the sorted courses with formatting
+    cout << "\n--- Course List ---" << endl;
+    cout << left << setw(10) << "Number" << setw(40) << "Name" << endl; // Header
+    cout << setfill('-') << setw(50) << "-" << setfill(' ') << endl; // Separator line
+
+    for (const Course& course : sortedCourses) {
+        cout << left << setw(10) << course.courseNumber << setw(40) << course.courseName << endl;
+    }
+
+    cout << endl;
+}
+>>>>>>> aa7e2efdf3c9fa32bf06b6bce9108cf0cece1709
