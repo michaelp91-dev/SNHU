@@ -7,34 +7,36 @@
 // Vector<Course> allCoursesVector
 // HashTable<String, Course> allCoursesHash
 // Tree<Course> allCoursesTree
+// HashTable<String, Boolean> validCourseNumbers  // For O(1) Prerequisite Validation
 
 // Function Declarations
 Function loadCourseDataVector(String filePath) -> Vector<Course>
-Function validateDataVector(Vector<Course> courses) -> Boolean
+Function validateDataVector(Vector<Course> courses, HashTable<String, Boolean> validCourseNumbers) -> Boolean
 Function searchCourseVector(Vector<Course> courses, String courseNumber) -> void
 Function printAllCoursesVector(Vector<Course> courses) -> void
 
 Function loadCourseDataHash(String filePath) -> HashTable<String, Course>
-Function validateDataHash(HashTable<String, Course> courses) -> Boolean
+Function validateDataHash(HashTable<String, Course> courses, HashTable<String, Boolean> validCourseNumbers) -> Boolean
 Function searchCourseHash(HashTable<String, Course> courses, String courseNumber) -> void
 Function printAllCoursesHash(HashTable<String, Course> courses) -> void
 
 Function loadCourseDataTree(String filePath) -> Tree<Course>
-Function validateDataTree(Tree<Course> courses) -> Boolean
+Function validateDataTree(Tree<Course> courses, HashTable<String, Boolean> validCourseNumbers) -> Boolean
 Function searchCourseTree(Tree<Course> courses, String courseNumber) -> void
 Function printAllCoursesTree(Tree<Course> courses) -> void
+Function insertCourse(Tree<Course> tree, Course course) -> void  // Explicit BST Insert
 
-Function displayMenu() -> Integer
+Function loadValidCourseNumbers(Tree<Course> courses) -> HashTable<String, Boolean>
+Function displayMenu() -> Integer // Returns the menu choice
 Function processMenuChoice(Integer choice) -> void
 
 Function compareCourses(Course course1, Course course2) -> Boolean
-
 
 // --- Vector Implementation ---
 
 Function loadCourseDataVector(String filePath) -> Vector<Course>
   // 1. Initialize Variables
-  Vector<Course> courses;
+  Vector<Course> courses
 
   // 2. Open File
   File file = openFile(filePath)
@@ -63,50 +65,34 @@ Function loadCourseDataVector(String filePath) -> Vector<Course>
        for i = 2 to lineValues.size() - 1
           currentCourse.prerequisites.push_back(lineValues[i])
        end for
-        // 3.4 Check for duplicates
-        Boolean duplicateFound = false;
-         for each course in courses:
-           if course.courseNumber == currentCourse.courseNumber:
-            duplicateFound = true;
-            print "Duplicate course number found: "+ currentCourse.courseNumber
-             break
-          end for
-        if duplicateFound == false:
-            courses.push_back(currentCourse)
-        end if
+
+       courses.push_back(currentCourse)
   end while
 
   file.close()
-  
-  if validateDataVector(courses) == false:
+
+  // 4. Load valid course numbers
+  validCourseNumbers = loadValidCourseNumbers(allCoursesTree)
+
+  // 5. Validate Data
+  if validateDataVector(courses, validCourseNumbers) == false:
         return empty Vector<Course>
 
   return courses
 end function
 
-Function validateDataVector(Vector<Course> courses) -> Boolean
-  // 1. Iterate Through Courses
-  for each course in courses:
-    // 2. Iterate Through Prerequisites
-    for each prerequisite in course.prerequisites:
-       Boolean prerequisiteFound = false;
-          // 3. Check for Prerequisites in Course List
-         for each otherCourse in courses:
-              if prerequisite == otherCourse.courseNumber:
-                 prerequisiteFound = true
-                 break
-         end for
-
-          // 4. If prereq not found, error
-        if prerequisiteFound == false:
+Function validateDataVector(Vector<Course> courses, HashTable<String, Boolean> validCourseNumbers) -> Boolean
+  // Use the hash table to check
+   for each course in courses:
+      for each prerequisite in course.prerequisites:
+         if validCourseNumbers.containsKey(prerequisite) == false:
            print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
-           return false;
-
-    end for
-  end for
-  
-  return true
-end function
+           return false
+         end if
+      end for
+   end for
+   return true
+end Function
 
 
 Function searchCourseVector(Vector<Course> courses, String courseNumber) -> void
@@ -134,14 +120,14 @@ end function
 
 Function printAllCoursesVector(Vector<Course> courses) -> void
   // 1. Create a Copy of Courses for Sorting
-  Vector<Course> sortedCourses = courses;
+  Vector<Course> sortedCourses = courses
   
   // 2. Sort by course number
-    sort(sortedCourses, compareCourses); // Uses a custom compare function
+    sort(sortedCourses, compareCourses)
 
     // 3. Print each course in sorted order
   for each course in sortedCourses:
-      print course.courseNumber + " " + course.courseName;
+      print course.courseNumber + " " + course.courseName
   end for
 end function
     
@@ -149,14 +135,15 @@ Function compareCourses(Course course1, Course course2) -> Boolean
     if course1.courseNumber < course2.courseNumber:
         return true
     else:
-      return false;
+      return false
     end if
 end function
+
 // --- Hash Table Implementation ---
 
 Function loadCourseDataHash(String filePath) -> HashTable<String, Course>
   // 1. Initialize Variables
-  HashTable<String, Course> courses;
+  HashTable<String, Course> courses
 
   // 2. Open File
   File file = openFile(filePath)
@@ -186,44 +173,41 @@ Function loadCourseDataHash(String filePath) -> HashTable<String, Course>
           currentCourse.prerequisites.push_back(lineValues[i])
        end for
 
-        // 3.4 Check for duplicates
-      if courses.containsKey(currentCourse.courseNumber) == true:
-        print "Duplicate course number found: "+ currentCourse.courseNumber
-      else:
-         courses.insert(currentCourse.courseNumber, currentCourse)
-      end if
+       //3.4 Store in Hash Table
+       courses.insert(currentCourse.courseNumber, currentCourse)
   end while
 
   file.close()
 
-  if validateDataHash(courses) == false:
+  // 4. Load valid course numbers
+  validCourseNumbers = loadValidCourseNumbers(allCoursesTree)
+
+  // 5. Validate Data
+  if validateDataHash(courses, validCourseNumbers) == false:
         return empty HashTable<String, Course>
 
   return courses
 end function
 
 
-Function validateDataHash(HashTable<String, Course> courses) -> Boolean
-  // 1. Iterate Through Courses
-  for each courseEntry in courses:
-    Course course = courseEntry.value;
-    // 2. Iterate Through Prerequisites
-    for each prerequisite in course.prerequisites:
-       // 3. Check for Prerequisites in Hash Table
-        if courses.containsKey(prerequisite) == false:
+Function validateDataHash(HashTable<String, Course> courses, HashTable<String, Boolean> validCourseNumbers) -> Boolean
+  // Use the hash table to check
+   for each courseEntry in courses:
+      Course course = courseEntry.value
+      for each prerequisite in course.prerequisites:
+         if validCourseNumbers.containsKey(prerequisite) == false:
            print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
-           return false;
-       end if
-    end for
-  end for
-  
-  return true
-end function
+           return false
+         end if
+      end for
+   end for
+   return true
+end Function
 
 Function searchCourseHash(HashTable<String, Course> courses, String courseNumber) -> void
     // 1. Check for the course
     if courses.containsKey(courseNumber) == true:
-       Course foundCourse = courses.get(courseNumber);
+       Course foundCourse = courses.get(courseNumber)
 
        print "Course Number: " + foundCourse.courseNumber
        print "Course Name: " + foundCourse.courseName
@@ -244,14 +228,14 @@ end function
 
 Function printAllCoursesHash(HashTable<String, Course> courses) -> void
    // 1. Get a vector of courses for sorting
-   Vector<Course> courseList = courses.getValues();
+   Vector<Course> courseList = courses.getValues()
 
    // 2. Sort by course number
   sort(courseList, compareCourses)
 
     // 3. Print each course in sorted order
   for each course in courseList:
-      print course.courseNumber + " " + course.courseName;
+      print course.courseNumber + " " + course.courseName
   end for
 end function
 
@@ -259,7 +243,7 @@ end function
 // --- Tree Implementation ---
 Function loadCourseDataTree(String filePath) -> Tree<Course>
   // 1. Initialize Variables
-  Tree<Course> courses;
+  Tree<Course> courses
 
   // 2. Open File
   File file = openFile(filePath)
@@ -289,47 +273,76 @@ Function loadCourseDataTree(String filePath) -> Tree<Course>
           currentCourse.prerequisites.push_back(lineValues[i])
        end for
 
-      // 3.4 Check for duplicates
-     Course foundCourse = courses.search(currentCourse.courseNumber);
-      if foundCourse != null:
-         print "Duplicate course number found: "+ currentCourse.courseNumber
-      else:
-        courses.insert(currentCourse)
-      end if
+       // 3.4 Insert into BST
+       insertCourse(courses, currentCourse)
   end while
 
   file.close()
 
-  if validateDataTree(courses) == false:
+    // 4. Load valid course numbers (AFTER tree is built)
+   validCourseNumbers = loadValidCourseNumbers(courses)
+
+  // 5. Validate Data
+  if validateDataTree(courses, validCourseNumbers) == false:
         return empty Tree<Course>
 
   return courses
 end function
 
-Function validateDataTree(Tree<Course> courses) -> Boolean
-   // 1. Get All Courses for Validation
-   Vector<Course> courseList = courses.inorderTraversal()
-
-  // 2. Iterate Through Courses
-  for each course in courseList:
-    // 3. Iterate Through Prerequisites
-    for each prerequisite in course.prerequisites:
-       // 4. Check for Prerequisites in Course List
-       Boolean prerequisiteFound = false;
-       for each otherCourse in courseList:
-           if prerequisite == otherCourse.courseNumber:
-              prerequisiteFound = true
-              break;
-       end for
-          // 5. If prereq not found, error
-        if prerequisiteFound == false:
+Function validateDataTree(Tree<Course> courses, HashTable<String, Boolean> validCourseNumbers) -> Boolean
+   // Use the hash table to check
+   for each course in courses:
+      for each prerequisite in course.prerequisites:
+         if validCourseNumbers.containsKey(prerequisite) == false:
            print "Error: Prerequisite '" + prerequisite + "' for course '" + course.courseNumber + "' does not exist."
-           return false;
-    end for
-  end for
-  
-  return true
-end function
+           return false
+         end if
+      end for
+   end for
+   return true
+end Function
+
+Function loadValidCourseNumbers(Tree<Course> courses) -> HashTable<String, Boolean>
+    HashTable<String, Boolean> validCourses
+
+    Vector<Course> courseList = courses.inorderTraversal()
+
+     // Now load into hash table for fast validation
+    for each course in courseList:
+        validCourses.insert(course.courseNumber, true)  // Just the presence of key matters
+
+    return validCourses
+end Function
+
+Function insertCourse(Tree<Course> tree, Course course) -> void
+  // 1. If tree is empty, create a new node
+  if tree.root == null:
+     tree.root = new Node(course)
+     return
+  end if
+
+  // 2. Otherwise, traverse the tree and insert
+  Node currentNode = tree.root
+
+  while true:
+    // 3. Compare course numbers (BST ordering)
+    if course.courseNumber < currentNode.data.courseNumber:  // Go left
+      if currentNode.left == null:
+         currentNode.left = new Node(course)
+         return
+      else:
+         currentNode = currentNode.left  // Move to left child
+      end if
+    else:  // Go right (or handle duplicates, if desired)
+      if currentNode.right == null:
+         currentNode.right = new Node(course)
+         return
+      else:
+         currentNode = currentNode.right  // Move to right child
+      end if
+    end if
+  end while
+end Function
 
 Function searchCourseTree(Tree<Course> courses, String courseNumber) -> void
     // 1. Search for the Course
@@ -357,17 +370,26 @@ end function
 
 Function printAllCoursesTree(Tree<Course> courses) -> void
   // 1. Get All Courses with Inorder Traversal
-    Vector<Course> courseList = courses.inorderTraversal();
+    Vector<Course> courseList = courses.inorderTraversal()
     
   // 2. Print each course
   for each course in courseList:
-      print course.courseNumber + " " + course.courseName;
+      print course.courseNumber + " " + course.courseName
   end for
 end function
 
+Function loadValidCourseNumbers(Tree<Course> courses) -> HashTable<String, Boolean>
+    HashTable<String, Boolean> validCourses
 
+    Vector<Course> courseList = courses.inorderTraversal()
 
-// --- Menu and Main Logic ---
+     // Now load into hash table for fast validation
+    for each course in courseList:
+        validCourses.insert(course.courseNumber, true)  // Just the presence of key matters
+
+    return validCourses
+end Function
+
 Function displayMenu() -> Integer
   print "--- Menu ---"
   print "1. Load Course Data"
@@ -380,42 +402,38 @@ end function
 
 Function processMenuChoice(Integer choice) -> void
     String filePath
+    String courseNumber
+
   if choice == 1:
-    filePath = getUserInput("Enter the course file path: ")
-      allCoursesVector = loadCourseDataVector(filePath);
-      allCoursesHash = loadCourseDataHash(filePath);
+      filePath = getUserInput("Enter the course file path: ")
+      allCoursesVector = loadCourseDataVector(filePath)
+      allCoursesHash = loadCourseDataHash(filePath)
       allCoursesTree = loadCourseDataTree(filePath)
       print "Course data loaded."
   else if choice == 2:
-     Integer structChoice = getUserInput("Select Data Structure (1: Vector, 2: Hash, 3: Tree): ");
+     Integer structChoice = getUserInput("Select Data Structure (1: Vector, 2: Hash, 3: Tree): ")
        if structChoice == 1:
-           printAllCoursesVector(allCoursesVector);
+           printAllCoursesVector(allCoursesVector)
        else if structChoice == 2:
-           printAllCoursesHash(allCoursesHash);
+           printAllCoursesHash(allCoursesHash)
        else if structChoice == 3:
-           printAllCoursesTree(allCoursesTree);
+           printAllCoursesTree(allCoursesTree)
        else:
-          print "Invalid Data Structure Choice";
-       end if;
+          print "Invalid Data Structure Choice"
+       end if
 
   else if choice == 3:
-    Integer structChoice = getUserInput("Select Data Structure (1: Vector, 2: Hash, 3: Tree): ");
-      String courseNumber;
-    do
-        courseNumber = getUserInput("Enter course number to search (or 'done' to return to menu): ")
-        if courseNumber != "done":
-           if structChoice == 1:
-            searchCourseVector(allCoursesVector, courseNumber)
-           else if structChoice == 2:
-             searchCourseHash(allCoursesHash, courseNumber)
-           else if structChoice == 3:
-             searchCourseTree(allCoursesTree, courseNumber)
-           else:
-             print "Invalid Data Structure Choice";
-            break;
-           end if;
-        end if
-    while courseNumber != "done"
+      courseNumber = getUserInput("Enter course number to search: ")
+      Integer structChoice = getUserInput("Select Data Structure (1: Vector, 2: Hash, 3: Tree): ")
+      if structChoice == 1:
+         searchCourseVector(allCoursesVector, courseNumber)
+      else if structChoice == 2:
+         searchCourseHash(allCoursesHash, courseNumber)
+      else if structChoice == 3:
+         searchCourseTree(allCoursesTree, courseNumber)
+      else:
+         print "Invalid Data Structure Choice"
+      end if
 
   else if choice == 9:
     print "Exiting..."
@@ -425,6 +443,11 @@ Function processMenuChoice(Integer choice) -> void
 end function
 
 // Main Program Logic
+Vector<Course> allCoursesVector
+HashTable<String, Course> allCoursesHash
+Tree<Course> allCoursesTree
+HashTable<String, Boolean> validCourseNumbers // for optimized validation
+
 Integer menuChoice
 do
   menuChoice = displayMenu()
