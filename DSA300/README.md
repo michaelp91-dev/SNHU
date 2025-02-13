@@ -1,8 +1,8 @@
-# CS-300 Portfolio Entry: Data Structures and Algorithms
+# DSA-300 Portfolio Entry: Data Structures and Algorithms
 
 ## Overview
 
-This entry showcases my work from CS-300, focusing on applying data structures and algorithms to solve practical programming problems. It includes my runtime and memory analysis from Project One and the working code for sorting and printing course lists from Project Two.
+This entry showcases my work from DSA-300, focusing on applying data structures and algorithms to solve practical programming problems. It includes my runtime and memory analysis from Project One and the working code for sorting and printing course lists from Project Two.
 
 ## Project Summary and Reflection
 
