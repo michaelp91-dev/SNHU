@@ -60,8 +60,8 @@ int main() {
         switch (menuChoice) {
             case 1: // Load Course Data
                 cout << "Enter the course file path: ";
-                cin.ignore();   // consume any stray newline characters from previous inputs
                 getline(cin, filePath); //Use Getline
+                cout << filePath << endl;
 
                 courses = loadCourseData(filePath); // Load the course data from the file
 
