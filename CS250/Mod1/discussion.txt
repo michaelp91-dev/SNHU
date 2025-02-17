@@ -1,0 +1,23 @@
+Hey y'all!
+
+I am Michael. I am a married father of three from Oklahoma. I hope one day to build my own startup engineering firm that will offer services through AI and computational engineering models.
+
+Here are my initial thoughts on the Waterfall vs. Agile discussion:
+
+**1. Existing Issues with the Waterfall Development Model**
+
+Waterfall's rigid, sequential approach presents several challenges. The biggest is its inflexibility. Changes are difficult and costly to implement once a phase is complete. This inflexibility doesn't work well in modern software development where requirements often evolve. Also, testing happens late, which can result in major issues discovered late.
+
+**2. How Agile Methodology Resolves These Issues**
+
+Agile resolves these issues with iterative development, breaking projects into short sprints, and welcoming change even late in the cycle. Agile methodologies such as Scrum utilize transparency, inspection, and adaptation, and focus on delivering working software more quickly.
+
+**3. Aspects of Agile that Impact Issues the Most**
+
+Iterative development allows for continuous feedback and adaptation. Continuous Integration and Continuous Delivery help resolve the delayed testing issue. Agile methodologies such as Scrum utilize transparency, inspection, and adaptation. Customer collaboration helps build the product users need and want.
+
+**4. Factors Driving the Rise of the Agile Methodology**
+
+Agile's rise is fueled by the need for faster time to market, increased customer satisfaction, and reduced risk. The rapid pace of technological change and growing project complexity also make Agile a more suitable approach than Waterfall.
+
+I look forward to your insights!
