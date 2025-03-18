@@ -32,3 +32,5 @@ Identify Agile champions: Find and support internal Agile advocates and mentors.
 Focus on early wins: Deliver tangible results quickly to demonstrate the value of Agile.
 Prioritize active listening: Make sure to address employee concerns and feedback directly.
 Supporting employees and demonstrating the value of Agile is crucial for a successful transformation.
+
+Supporting employees and demonstrating the value of Agile is crucial for a successful transformation.
