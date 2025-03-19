@@ -1,6 +1,4 @@
-/*
- * Decompiled with CFR 0.152.
- */
+
 import java.awt.Component;
 import java.awt.Rectangle;
 import javax.swing.BorderFactory;
