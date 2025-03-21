@@ -1,0 +1,40 @@
+Hey y'all!
+
+Amazon's "Amazonian Agility" shows us how to make software development better. A key idea is the "Two Pizza Rule." This post looks at that rule, how it helps people, and how Amazon and our SNHU Travel project can use Agile ideas.
+
+What's the "Two Pizza Rule"?
+
+The "Two Pizza Rule" says a team should be small enough to feed with two pizzas (6-10 people). This helps Amazon because:
+
+Easier to Talk: Small teams communicate directly, avoiding confusion.
+More Responsibility: People feel more responsible for their work.
+Quicker Decisions: Small groups decide things faster.
+More Ideas: People are more comfortable sharing new ideas.
+This rule lets Amazon be fast and innovative, launching products quickly.
+
+How It Helps Individuals
+
+The "Two Pizza Rule" helps individuals because:
+
+Clearer Roles: People know what they're supposed to do.
+Direct Feedback: People get feedback to improve.
+More Impact: Individuals can see their work making a difference.
+Better Learning: It's easier to learn from others.
+Less Bureaucracy: Teams are smaller and more nimble.
+Agile at Amazon: Welcoming Change
+
+Amazon uses the Agile principle of "Welcome changing requirements, even late in development." They constantly watch what customers do and quickly change their products to make them better. This helps them stay ahead.
+
+Agile for SNHU Travel: Motivated People
+
+For our SNHU Travel project, I'd use the principle "Build projects around motivated individuals." We need to:
+
+Give people freedom: Let them own their tasks.
+Help each other: Create a supportive team.
+Show appreciation: Recognize good work.
+Share the vision: Make sure everyone understands the goal.
+If we do this, our team will be more engaged and successful.
+
+Conclusion
+
+Amazon's success proves that Agile principles and small teams work. By using these ideas, we can make our teams better and build great products. Our SNHU Travel project can thrive by focusing on motivated individuals.
