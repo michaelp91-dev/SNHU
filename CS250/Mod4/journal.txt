@@ -1,44 +1,44 @@
-## Journal Entry: Retrospective on Product Testing
+Journal Entry: Retrospective on Product Testing
 
 As a product tester on an Agile team, my role goes beyond finding code defects; it's about ensuring the product meets user needs as defined in user stories. This journal entry reflects on my experience developing test cases for a travel booking software, emphasizing the critical interpretation of user stories and the communication required to ensure comprehensive test coverage.
 
-### I. Most Helpful Elements of User Stories
+I. Most Helpful Elements of User Stories
 
-The **clear value statement** ("As a \[user type], I want \[goal] so that \[benefit]") was vital. It clarified the user's motivation, guiding test prioritization. **Acceptance criteria** provided measurable conditions for feature completion, defining test inputs, expected results, and pass/fail measures. User stories also helped define scope, preventing feature creep, and focused testing on core functionality. Finally, they are written from a **user perspective**, which allowed for designing realistic test scenarios.
+The clear value statement (As a [user type], I want [goal] so that [benefit]) was vital. It clarified the user's motivation, guiding test prioritization. Acceptance criteria provided measurable conditions for feature completion, defining test inputs, expected results, and pass/fail measures. User stories also helped define scope, preventing feature creep, and focused testing on core functionality. Finally, they are written from a user perspective, which allowed for designing realistic test scenarios.
 
-### II. Importance of Communication with the Product Owner
+II. Importance of Communication with the Product Owner
 
-Communication with the Product Owner was crucial for success. This included **Clarifying ambiguities:** and **Validating assumptions**, and **Ensuring testability**. I used to send the emails, then come up with some assumptions and talk them over. This was invaluable, as it made sure that the test cases are correct.
+Communication with the Product Owner was crucial for success. This included Clarifying ambiguities, Validating assumptions, and Ensuring testability. I used to send the emails, then come up with some assumptions and talk them over. This was invaluable, as it made sure that the test cases are correct.
 
 In summary, to be helpful, the Product Owner must be quick to respond, be open to feedback and willing to make changes to the user stories based on testing results.
 
-### III. Missing Information in User Stories
+III. Missing Information in User Stories
 
-The user stories lacked some information that would have been useful. Often the **lack of specific details** about implementation, this was especially true of user interfaces. There are also **unclear acceptance criteria** at times, in that the acceptance criteria can be vague and don't specify the required level of detail. Finally, the user stories often have **missing edge cases**, such as "How is popularity determined?".
+The user stories lacked some information that would have been useful. Often the lack of specific details about implementation, this was especially true of user interfaces. There are also unclear acceptance criteria at times, in that the acceptance criteria can be vague and don't specify the required level of detail. Finally, the user stories often have missing edge cases, such as "How is popularity determined?".
 
-### IV. Getting Additional Information
+IV. Getting Additional Information
 
 I believe additional information should come from email communication, test case reviews, and user story refinement. Scheduling brief, informal meetings with the Product Owner to discuss the user stories can help.
 
-### V. Sample Email
+V. Sample Email
 
 Subject: User Story Clarifications for SNHU Travel Project
 
-Dear \[Product Owner's Name],
+Dear [Product Owner's Name],
 
 I am developing test cases for the following user stories for the SNHU Travel project and would appreciate some clarification to ensure comprehensive test coverage.
 
-**User Story 1: View Top Destinations by Popularity**
+User Story 1: View Top Destinations by Popularity
 
 *   What specific metrics will be used to determine "popularity" (e.g., number of bookings, user ratings, a combination of factors)?
 *   Is there a specific source we can access to determine which vacations are most popular?
 
-**User Story 2: Customize Top Destination List**
+User Story 2: Customize Top Destination List
 
 *   When a new user joins, what popularity or default settings is the system initialized with?
 *   Are there any settings that are restricted or blocked?
 
-**User Story 3: Choose Vacation Type**
+User Story 3: Choose Vacation Type
 
 *   In the UI Design, are the vacation types shown in a list or other format?
 *   What is the process by which the user types are selected? Is there a limit?
@@ -49,13 +49,13 @@ Thank you for your time and assistance.
 
 Sincerely,
 
-\[Your Name]
+[Your Name]
 
-### Conclusion
+Conclusion
 
 User stories provide the foundation for effective test cases, but frequent communication with the Product Owner is critical for clarifying details and ensuring complete test coverage. By refining user stories based on feedback and testing results, the team can build a successful product.
 
-### References
+References
 
 *   Crispin, L., & Gregory, J. (2009). *Agile testing: A practical guide for testers and agile teams*. Addison-Wesley Professional.
 *   Lisa Crispin, Janet Gregory (website): Great resource about Agile practices, testing etc.
