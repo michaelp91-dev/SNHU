@@ -1,0 +1,11 @@
+Hey y'all!
+
+Agile estimation is key to project success. I've chosen Planning Poker as a method, then analyze a real example where it was needed. This can help future teams make well-informed decisions.
+
+Planning Poker is where the team uses cards with values (story points) and then discusses and estimates the value. The discussions help all members of the team see details they may have not observed otherwise.
+
+I chose this as it involves the team, uses different views, and it also helps the project to have more realistic estimates. However, it also can be time-consuming and require experience.
+
+  The "Project Phoenix" had new ERP with optimistic values, and failed. Some solutions could have included planning poker or story points to help them. If it had used planning poker and story points, then it may have been successful. Agile methodologies can help prevent scope creep and unrealistic expectations.
+
+With better estimates, the "Project Phoenix" could have delivered more value! It is a shame that the company had that problem, as it makes you think about the potential that could have existed. Good estimation practices are important.
