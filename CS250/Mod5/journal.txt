@@ -1,0 +1,42 @@
+Journal Entry: Retrospective on Agile Development and Change Communication
+As a developer on an Agile team, my role requires not only coding skills but also effective communication and adaptability, especially when project requirements shift. This journal entry reflects on managing such changes in the SNHU Travel project, focusing on communication with the Product Owner and Tester to adapt to a new project direction. In that direction, communication and feedback loops are the foundations that ensure teams are adaptive and successful.
+
+I. Requests from the Product Owner and Tester
+In this situation, we shifted from a list of best options, to a focus on specific types of wellness packages. In that, I have the following requests:
+
+From the Product Owner I want a Clear Prioritization: This helps the team to ensure that they are focused on the correct components. The Product Owner must also work to create a clear path for the code. A great tool to do so is with Detailed Acceptance Criteria. The last key that is needed is with Accessibility and Responsiveness. A Product Owner who does not provide feedback is no help. From the Tester The following are required: Updated Test Cases which requires the user stories to be correctly updated for the changes. They also need to be Feedback on Code Changes to help me improve the quality of the code I write. Finally they need to participate in Collaboration on Testability.
+
+II. Ensuring a Response
+Ensuring a response requires a plan:
+
+Clear and Concise Communication To receive a response, I work to make my questions detailed and thoughtful. This also increases the chances of a good answer.
+
+Escalation Procedures: When we do not receive a response, there is a clear method that can work.
+
+Regular Meetings: Sprints, stand-ups, and reviews will be an important part of that goal to reach each other.
+
+Proactive Communication: I want to be a valuable part of this, so I take pride in trying to reach each stakeholder with what's needed. This is a valuable component to build a good reputation. I find that all of these pieces also build a solid rapport, making the entire plan work.
+
+III. Agile Methodology and Flexibility
+To be better organized, here is what is needed: Agile's iterative approach allows for incorporating changes gradually, reducing the risk of major disruptions. Agile planning allows for adjusting the project plan based on feedback and changing requirements. This may affect other factors, but I believe this is the most valuable for a team. Continuous integration and testing enable early detection and resolution of issues related to the changes. It is important to be able to test, and have that done from the start. Self-organizing teams empower self-organizing teams to make decisions and adapt to changing circumstances. This allows decisions to be made quickly and with confidence.
+
+IV. Sample Email
+Subject: SNHU Travel Project - Clarifications Needed for Detox/Wellness Focus
+
+Dear [Product Owner's Name] and [Tester's Name],
+
+As we move forward with the new focus on detox/wellness travel, I need some clarification to ensure smooth development and thorough testing.
+
+What are the precise components of what detox/wellness packages the users will see?
+What images can I use to ensure that these are all on theme?
+Are there any specific packages that must be released first?
+These details are crucial to making sure the code is functional. Let me know your opinions.
+
+Thank you, [Your Name]
+
+Conclusion
+Success is based on communication and iteration when implementing Agile practices. When a project shifts in scope, it is important to make sure all team members can communicate. If these steps are followed, we can all see greater success.
+
+References
+Shore, J., & Warden, S. (2021). The Art of Agile Development. O'Reilly Media.
+Kniberg, H. (2020). Scrum and XP from the Trenches. InfoQ.
