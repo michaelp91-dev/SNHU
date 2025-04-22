@@ -27,4 +27,4 @@ Being a good team member in software development involves more than just technic
 * Providing and receiving constructive feedback 
 * Collaborating to solve problems and achieve shared goals 
 * Adapting to change and supporting team members
-* 
+
