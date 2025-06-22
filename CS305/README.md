@@ -1,6 +1,6 @@
 ---
 
-### **README: Secure Software Development for Artemis Financial**
+### **Secure Software Development for Artemis Financial**
 
 This repository showcases the application of secure software development principles and practices to enhance an existing web application for Artemis Financial, a financial consulting client.
 
