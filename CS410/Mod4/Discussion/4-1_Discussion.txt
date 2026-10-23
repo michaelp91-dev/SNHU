@@ -1,0 +1,13 @@
+4-1 Discussion: Coding Approaches
+Michael Puckett
+CS-410
+
+When I start a coding project, I try to see the whole program before I write real code. I figure out the inputs, the processes, and the outputs. I write a lot of pseudocode for that, and sometimes I put it on a simple chart so I can see how the pieces connect.
+
+Once I can see the whole thing, I pick one piece and start there. Early on I leave a lot of placeholders. I would rather have the shape of the program in place than try to finish every function on the first pass. Then I go back and fill those pieces in.
+
+I usually work through this on my own. If I get stuck, or if I know someone else understands that part better than I do, I will ask for help.
+
+---
+Replies (after classmates post):
+Compare their start to yours. If they jump straight into code, note that you sketch the whole program in pseudocode first. If they also map inputs and outputs, say that matches how you work.
