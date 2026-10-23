@@ -1,0 +1,22 @@
+5-1 Discussion: Incidents of Hacking and Response
+Michael Puckett
+CS-410
+
+The incident I looked at is the 2017 Equifax data breach.
+
+Citation: Federal Trade Commission, Equifax Data Breach Settlement.
+https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement
+
+Equifax, one of the three major U.S. credit bureaus, was the target. Attackers got in through the company’s dispute web portal, which was running a vulnerable version of Apache Struts (CVE-2017-5638). A patch had been available since March 2017. The intrusion started around mid-May 2017 and was not publicly announced until September 7, 2017. About 147 million people were affected. Stolen data included names, Social Security numbers, birth dates, addresses, and, for some people, driver’s license numbers. A smaller set of credit card numbers was also taken.
+
+Equifax said it found the breach on July 29, 2017 after noticing suspicious network traffic. Two things made the hole worse. First, the known Struts flaw was not patched on that server. Second, an expired security certificate kept a traffic-inspection tool from seeing the data leaving the network for months, so the theft went on longer than it should have. The attackers sent crafted requests to the Struts application, ran commands on the server, and then moved through internal systems to the databases that held consumer credit files.
+
+After the discovery, Equifax took the affected portal offline, hired outside investigators, notified the public, and offered credit monitoring and identity restoration. Congress held hearings, and Equifax later agreed to a settlement of up to about $700 million with the FTC, the CFPB, and state attorneys general. That money covered monitoring, restitution, and penalties.
+
+The lesson is basic patch and monitoring discipline. A public vulnerability with a patch is not a theoretical risk. Equifax needed an inventory of internet-facing apps, a deadline for applying critical patches, and working logs. An expired certificate should have been an alert, not something that silently blinded the sensor. Extra layers would have helped: segment the credit-file databases from the public web app, require multi-factor access on internal admin paths, and alert when a certificate or an intrusion sensor stops working.
+
+Reverse engineering fits this case in two ways. On the attack side, people reversed the Struts patch and the exploit to see exactly which request reached the vulnerable parser. On the defense side, the same process is how you confirm a legacy web app is still exposing that code path: pull the deployed binary or class files, find the Struts version, and check whether the vulnerable function is still reachable. That is the same idea as this course. You do not trust the documentation. You look at the code that is actually running.
+
+---
+Replies (after classmates post):
+Compare their incident with Equifax. Add whether their case also failed on patching, detection, or access control, and whether reversing the affected binary would have shown the bug before it was exploited.
